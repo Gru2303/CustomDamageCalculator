@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+    <html>
+    <title>Custom Damage Calculator</title>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <style>
+            html, body {
+                display: flex;
+                justify-content: center;
+                font-family: Roboto, Arial, sans-serif;
+                font-size: 15px;
+            }
+            .form {
+                border: 5px solid #f1f1f1;
+            }
+            input[type=text], input[type=number] {
+                width: 100%;
+                padding: 16px 8px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+            .icon {
+                font-size: 110px;
+                display: flex;
+                justify-content: center;
+                color: #4286f4;
+            }
+            button {
+                background-color: #4286f4;
+                color: white;
+                padding: 14px 0;
+                margin: 10px 0;
+                border: none;
+                width: 48%;
+            }
+            h1 {
+                text-align:center;
+                fone-size:18;
+            }
+            button:hover {
+                opacity: 0.8;
+            }
+            .formcontainer {
+                text-align: center;
+                margin: 24px 50px 12px;
+            }
+            .container {
+                padding: 16px 0;
+                text-align:left;
+            }
+            span.psw {
+                float: right;
+                padding-top: 0;
+                padding-right: 15px;
+            }
+            /* Change styles for span on extra small screens */
+            @media screen and (max-width: 300px) {
+                span.psw {
+                    display: block;
+                    float: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="form">
+            <h1>Custom Damage Calculator</h1>
+            <div class="icon">
+                <i class="fas fa-ban"></i>
+            </div>
+            <div class="formcontainer">
+                <div class="container">
+                    <label><strong>Damage</strong></label>
+                    <input type="number" min="0" value="0" placeholder="Enter Damage" id="damage" name="damage" required>
+                    <label><strong>Armor</strong></label>
+                    <input type="number" min="0" value="0"  placeholder="Enter Armor" id="armor" name="armor" required>
+                    <label><strong>Toughness</strong></label>
+                    <input type="number" min="0" value="0"  placeholder="Enter Toughness" id="toughness" name="toughness" required>
+                </div>
+
+                <button id="submit" onclick="calculate()"><strong>Calculate</strong></button>
+
+                <div class="container" style="background-color: #eee">
+                    <h1>Damage</h1>
+                    <h1 id="damageResult">0</h1>
+                </div>
+            </div>
+        </div>
+
+        <script type="application/javascript">
+            function calculate() {
+                let damage = parseInt(document.getElementById("damage").value);
+                let armor = parseInt(document.getElementById("armor").value);
+                let toughness = parseInt(document.getElementById("toughness").value);
+
+                let damageResult = this.document.getElementById("damageResult");
+
+                damageResult.innerText = calculateDamage(damage, armor, toughness);
+            }
+
+            function calculateDamage(damage, armor, toughness) {
+                let finalDamage = ((damage * 4.0 - (armor + toughness)) / 4.0) + 2;
+
+                return Math.max(clamp(finalDamage, 0.0, Math.min(damage, 20.0)), 0.0);
+            }
+
+            function clamp(val, min, max) {
+                return val > max ? max : val < min ? min : val;
+            }
+        </script>
+    </body>
+</html>
